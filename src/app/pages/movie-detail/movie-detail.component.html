@@ -1,0 +1,171 @@
+<!-- movie-detail.component.html -->
+<div class="cinematic-simple-page" 
+     [ngStyle]="{'background-image': 'url(https://image.tmdb.org/t/p/original/' + getMovieDetailResult?.backdrop_path + ')'}">
+    <div class="simple-overlay"></div>
+    
+    <!-- Main Content -->
+    <div class="container position-relative min-vh-100 d-flex flex-column justify-content-center">
+        <!-- Back Button -->
+        <div class="back-btn-wrapper position-absolute top-0 start-0 mt-3 ms-3">
+            <button class="btn btn-outline-light btn-sm d-flex align-items-center" (click)="goBack()">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" class="me-2">
+                    <path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6z"/>
+                </svg>
+                Back
+            </button>
+        </div>
+
+        <!-- Poster and Core Info -->
+        <div class="row justify-content-center text-center">
+            <div class="col-lg-4 col-md-6 col-10">
+                <div class="poster-wrapper animate__animated animate__fadeIn">
+                    <img [src]="'https://image.tmdb.org/t/p/w500/' + getMovieDetailResult?.poster_path" 
+                         [alt]="getMovieDetailResult?.original_title" 
+                         class="img-fluid rounded shadow-lg">
+                </div>
+            </div>
+        </div>
+
+        <!-- Title and Details -->
+        <div class="row justify-content-center text-center mt-4">
+            <div class="col-lg-8 col-12">
+                <div class="details-wrapper animate__animated animate__fadeInUp">
+                    <h1 class="movie-title">{{getMovieDetailResult?.original_title}}</h1>
+                    <p class="movie-tagline">{{getMovieDetailResult?.tagline || 'No tagline available'}}</p>
+                    <div class="meta-bar d-flex justify-content-center flex-wrap gap-3 mb-3">
+                        <span class="meta-item">{{getMovieDetailResult?.release_date | date:'yyyy'}}</span>
+                        <span class="meta-item">{{getMovieDetailResult?.runtime ? (getMovieDetailResult.runtime | number) + ' min' : 'N/A'}}</span>
+                        <span class="meta-item">{{genresList || 'N/A'}}</span>
+                        <span class="meta-item rating">⭐ {{getMovieDetailResult?.vote_average | number:'1.1-1'}}/10</span>
+                    </div>
+                    <p class="overview-text mx-auto">{{getMovieDetailResult?.overview || 'No overview available'}}</p>
+                    <div class="action-buttons d-flex justify-content-center gap-4 mt-4">
+  <!-- Watch Trailer Button -->
+   
+<button class="btn btn-primary btn-lg d-flex align-items-center gap-2 cinematic-btn" 
+(click)="openTrailer()">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+<path d="M8 5v14l11-7z"/>
+</svg>
+Watch Trailer
+</button>
+
+<!-- Trailer Modal -->
+<div class="trailer-modal" *ngIf="showTrailer">
+    <div class="trailer-content">
+      <span class="close-btn" (click)="closeTrailer()">&times;</span>
+      
+      <!-- Responsive iframe container -->
+      <div class="iframe-wrapper">
+        <iframe
+          [src]="sanitizedTrailerUrl"
+          frameborder="0"
+          allowfullscreen
+          allow="autoplay; encrypted-media">
+        </iframe>
+      </div>
+    </div>
+  </div>
+  
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Additional Info -->
+        <div class="row justify-content-center text-center mt-5">
+            <div class="col-lg-6 col-12">
+                <div class="extra-info animate__animated animate__fadeInUp" [ngStyle]="{'animation-delay': '0.2s'}">
+                    <p><strong>Budget:</strong> {{getMovieDetailResult?.budget ? (getMovieDetailResult.budget | currency:'USD':'symbol':'1.0-0') : 'N/A'}}</p>
+                    <p><strong>Revenue:</strong> {{getMovieDetailResult?.revenue ? (getMovieDetailResult.revenue | currency:'USD':'symbol':'1.0-0') : 'N/A'}}</p>
+                    <p><strong>Languages:</strong> {{languagesList || 'N/A'}}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Updated Cast Section with New Card Design -->
+        <div class="row mt-5">
+            <div class="col-12">
+                <h2 class="cast-title animate__animated animate__fadeInUp">Cast</h2>
+                <div class="cast-scroll-container">
+                    <div class="cast-scroll d-flex gap-4 py-3">
+                        <div class="cast-card animate__animated animate__fadeInUp" 
+                             *ngFor="let actor of getMovieCastResult let i = index"
+                             [ngStyle]="{'animation-delay': (i * 0.1) + 's'}">
+                             
+    <a [routerLink]="['/actor', actor.id]">
+                            <div class="cast-card-inner">
+                                <img [src]="'https://image.tmdb.org/t/p/w185/' + actor.profile_path" 
+                                     [alt]="actor.name" 
+                                     class="cast-img rounded"
+                                     *ngIf="actor.profile_path; else noImage">
+                                <ng-template #noImage>
+                                    <div class="no-image rounded"></div>
+                                </ng-template>
+                                <div class="cast-overlay">
+                                    <p class="cast-name">{{actor.name}}</p>
+                                    <p class="cast-role">{{actor.character}}</p>
+                                </div>
+                            </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+    </div>
+
+    <div class="container position-relative min-vh-100 d-flex flex-column justify-content-center">
+                
+<!----Trending Movies Start -->
+<div class="trending-section">
+
+    <h4 class="trending-title animate__animated animate__fadeInDown">Similar</h4>
+    <div class="trending-row">
+        <div class="movie-tile" 
+             *ngFor="let movie of recommendedMoviesResult" 
+             [ngClass]="{'hovered': movie.isHovered}"
+             (mouseenter)="movie.isHovered = true"
+             (mouseleave)="movie.isHovered = false">
+            <!-- Tile Layout -->
+            <div class="tile-wrapper">
+                <img src="https://image.tmdb.org/t/p/w500/{{movie.poster_path}}" 
+                     alt="{{movie.title}}" 
+                     class="tile-image">
+                <div class="tile-overlay"></div>
+                <div class="tile-content">
+                    <div class="tile-header">
+                        <h3 class="tile-title">{{movie.title}}</h3>
+                        <div class="tile-rating">
+                            <svg class="star-icon" viewBox="0 0 24 24">
+                                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                            </svg>
+                            <span>{{movie.vote_average.toFixed(1)}}/10</span>
+                        </div>
+                    </div>
+                    <div class="tile-actions">
+                        <button class="btn-details" (click)="toggleWatchlist(movie)" [ngClass]="{'added': isInWatchlist(movie.id)}">
+                            {{ isInWatchlist(movie.id) ? '✓ In Watchlist' : '+ Watchlist' }}
+                          </button>
+                          
+                        <button class="btn-details" [routerLink] = "['/movie', movie.id]">
+                            <svg class="info-icon" viewBox="0 0 24 24">
+                                <path d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 18a8 8 0 110-16 8 8 0 010 16zm-1-5h2v2h-2v-2zm0-8h2v6h-2V7z"/>
+                            </svg>
+                            Details
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!--end of trending-->
+    </div>
+</div>

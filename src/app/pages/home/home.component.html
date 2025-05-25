@@ -1,0 +1,184 @@
+
+<div class="container my-3">
+<app-navbar></app-navbar>
+</div>
+
+
+<div id="stellarCarousel" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+      <button *ngFor="let b of bannerResult; let i=index" type="button" data-bs-target="#stellarCarousel" 
+              [attr.data-bs-slide-to]="i" [class.active]="i === 0" [attr.aria-current]="i === 0 ? 'true' : null" 
+              [attr.aria-label]="'Slide ' + (i+1)"></button>
+    </div>
+    
+    <div class="carousel-inner">
+      <div class="carousel-item" *ngFor="let b of bannerResult; let i=index" [ngClass]="{ 'active': i === 0 }">
+        <div class="carousel-image-wrapper">
+          <img src="https://image.tmdb.org/t/p/original/{{b.backdrop_path}} " class="d-block w-100" alt="{{b.original_title}}">
+          <div class="carousel-overlay"></div>
+        </div>
+        <div class="carousel-caption">
+          <h5 class="carousel-title">{{b.original_title}} {{b.original_name}}</h5>
+          <p class="carousel-desc">{{b.overview}}</p>
+          <div class="carousel-actions">
+          
+              
+            <button class="btn-details" [routerLink] = "['/movie', b.id]" >
+                <svg class="info-icon" viewBox="0 0 24 24">
+                    <path d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 18a8 8 0 110-16 8 8 0 010 16zm-1-5h2v2h-2v-2zm0-8h2v6h-2V7z"/>
+                </svg>
+                Details
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <button class="carousel-control-prev" type="button" data-bs-target="#stellarCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#stellarCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+</div>
+
+
+                   <!----Trending Movies Start -->
+                   <div class="trending-section">
+                    <h4 class="trending-title animate__animated animate__fadeInDown">Trending Movies</h4>
+                    <div class="trending-row">
+                        <div class="movie-tile" 
+                             *ngFor="let movie of trendingDataResult" 
+                             [ngClass]="{'hovered': movie.isHovered}"
+                             (mouseenter)="movie.isHovered = true"
+                             (mouseleave)="movie.isHovered = false">
+                            <!-- Tile Layout -->
+                            <div class="tile-wrapper">
+                                <img src="https://image.tmdb.org/t/p/w500/{{movie.poster_path}}" 
+                                     alt="{{movie.title}}" 
+                                     class="tile-image">
+                                <div class="tile-overlay"></div>
+                                <div class="tile-content">
+                                    <div class="tile-header">
+                                        <h3 class="tile-title">{{movie.title}}</h3>
+                                        <div class="tile-rating">
+                                            <svg class="star-icon" viewBox="0 0 24 24">
+                                                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                                            </svg>
+                                            <span>{{movie.vote_average.toFixed(1)}}/10</span>
+                                        </div>
+                                    </div>
+                                    <div class="tile-actions">
+                                        <button class="btn-details" (click)="toggleWatchlist(movie)" [ngClass]="{'added': isInWatchlist(movie.id)}">
+                                            {{ isInWatchlist(movie.id) ? '✓ In Watchlist' : '+ Watchlist' }}
+                                          </button>
+                                          
+                                          
+                                        <button class="btn-details" [routerLink] = "['/movie', movie.id]">
+                                            <svg class="info-icon" viewBox="0 0 24 24">
+                                                <path d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 18a8 8 0 110-16 8 8 0 010 16zm-1-5h2v2h-2v-2zm0-8h2v6h-2V7z"/>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!--end of trending-->
+
+
+        <!--Start of Now Playing-->
+
+<div class="trending-section">
+    <h2 class="trending-title animate__animated animate__fadeInDown">Now Playing</h2>
+    <div class="trending-row">
+        <div class="movie-tile" 
+             *ngFor="let movie of nowPlayingDataResult" 
+             [ngClass]="{'hovered': movie.isHovered}"
+             (mouseenter)="movie.isHovered = true"
+             (mouseleave)="movie.isHovered = false">
+            <!-- Tile Layout -->
+            <div class="tile-wrapper">
+                <img src="https://image.tmdb.org/t/p/w500/{{movie.poster_path}}" 
+                     alt="{{movie.title}}" 
+                     class="tile-image">
+                <div class="tile-overlay"></div>
+                <div class="tile-content">
+                    <div class="tile-header">
+                        <h3 class="tile-title">{{movie.title}}</h3>
+                        <div class="tile-rating">
+                            <svg class="star-icon" viewBox="0 0 24 24">
+                                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                            </svg>
+                            <span>{{movie.vote_average.toFixed(1)}}/10</span>
+                        </div>
+                    </div>
+                    <div class="tile-actions">
+                        <button class="btn-details" (click)="toggleWatchlist(movie)" [ngClass]="{'added': isInWatchlist(movie.id)}">
+                            {{ isInWatchlist(movie.id) ? '✓ In Watchlist' : '+ Watchlist' }}
+                          </button>
+                          
+                        <button class="btn-details"  [routerLink] = "['/movie', movie.id]">
+                            <svg class="info-icon" viewBox="0 0 24 24">
+                                <path d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 18a8 8 0 110-16 8 8 0 010 16zm-1-5h2v2h-2v-2zm0-8h2v6h-2V7z"/>
+                            </svg>
+                            
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+                      <!--End of Now PLaying-->
+
+
+                    <!--Start of TV Series-->
+
+                    <div class="trending-section">
+                        <h2 class="trending-title animate__animated animate__fadeInDown">TV Series</h2>
+                        <div class="trending-row">
+                            <div class="movie-tile" 
+                                 *ngFor="let movie of tvSeriesResult" 
+                                 [ngClass]="{'hovered': movie.isHovered}"
+                                 (mouseenter)="movie.isHovered = true"
+                                 (mouseleave)="movie.isHovered = false">
+                                <!-- Tile Layout -->
+                                <div class="tile-wrapper">
+                                    <img src="https://image.tmdb.org/t/p/w500/{{movie.poster_path}}" 
+                                         alt="{{movie.name}}" 
+                                         class="tile-image">
+                                    <div class="tile-overlay"></div>
+                                    <div class="tile-content">
+                                        <div class="tile-header">
+                                            <h3 class="tile-title">{{movie.name}}</h3>
+                                            <div class="tile-rating">
+                                                <svg class="star-icon" viewBox="0 0 24 24">
+                                                    <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                                                </svg>
+                                                <span>{{movie.vote_average.toFixed(1)}}/10</span>
+                                            </div>
+                                        </div>
+                                        <div class="tile-actions">
+                                            <button class="btn-details" (click)="toggleWatchlist(movie)" [ngClass]="{'added': isInWatchlist(movie.id)}">
+                                                {{ isInWatchlist(movie.id) ? '✓ In Watchlist' : '+ Watchlist' }}
+                                              </button>
+                                              
+                                            <button class="btn-details" [routerLink] = "['/movie', movie.id]">
+                                                <svg class="info-icon" viewBox="0 0 24 24">
+                                                    <path d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 18a8 8 0 110-16 8 8 0 010 16zm-1-5h2v2h-2v-2zm0-8h2v6h-2V7z"/>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                    
+                            </div>
+                        </div>
+                    </div>

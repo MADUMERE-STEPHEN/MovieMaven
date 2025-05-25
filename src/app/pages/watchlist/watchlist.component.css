@@ -1,0 +1,266 @@
+button {
+    background-color: #222;
+    color: white;
+    border: 1px solid #444;
+    padding: 8px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  button.added {
+    background-color: #22c55e;
+    color: white;
+  }
+  
+  /* watchlist.component.css */
+.modern-watchlist-page {
+    background: #0a0a0a;
+    color: #fff;
+    font-family: 'Poppins', sans-serif;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+/* Title */
+.watchlist-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 20px;
+    padding: 20px 0;
+    text-align: center;
+}
+
+/* Movie Grid */
+.movie-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    padding: 0 10px;
+}
+
+/* Movie Card */
+.movie-card {
+    background: #1a1a1a;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #2e2e2e;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+    position: relative;
+}
+
+.movie-card:hover {
+    transform: translateY(-5px);
+    border-color: #e50914;
+}
+
+/* Poster */
+.poster-container {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 2 / 3;
+}
+
+.poster-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.poster-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #2e2e2e;
+    color: #fff;
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+.card-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, rgba(10, 10, 10, 0.8), transparent 50%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.movie-card:hover .card-overlay {
+    opacity: 1;
+}
+
+/* Card Content */
+.card-content {
+    padding: 15px;
+}
+
+/* Card Header */
+.card-header {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.movie-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #fff;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.movie-rating {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.9rem;
+    color: #ddd;
+}
+
+.star-icon {
+    width: 16px;
+    height: 16px;
+    fill: #e50914;
+}
+
+/* Card Actions */
+.card-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-details, .btn-remove {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.btn-details {
+    background: #e50914;
+    color: #fff;
+    border: none;
+}
+
+.btn-details:hover {
+    background: #ff4b1f;
+    transform: scale(1.05);
+}
+
+.btn-remove {
+    background: none;
+    color: #ff4b1f;
+    border: 1px solid #ff4b1f;
+}
+
+.btn-remove:hover {
+    background: #ff4b1f;
+    color: #fff;
+    transform: scale(1.05);
+}
+
+.info-icon {
+    width: 16px;
+    height: 16px;
+    fill: #fff;
+}
+
+/* Empty State */
+.empty-message {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #ddd;
+    padding: 40px 20px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .watchlist-title {
+        font-size: 1.8rem;
+    }
+    .movie-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 15px;
+    }
+    .movie-title {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .watchlist-title {
+        font-size: 1.5rem;
+    }
+    .movie-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 15px;
+    }
+    .movie-title {
+        font-size: 0.9rem;
+    }
+    .movie-rating, .btn-details, .btn-remove {
+        font-size: 0.8rem;
+    }
+    .star-icon, .info-icon {
+        width: 14px;
+        height: 14px;
+    }
+    
+}
+/* From Uiverse.io by vinodjangid07 */ 
+.button {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: rgb(20, 20, 20);
+    border: none;
+    font-weight: 600;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.164);
+    cursor: pointer;
+    transition-duration: 0.3s;
+    overflow: hidden;
+    position: relative;
+    gap: 2px;
+  }
+  
+  .svgIcon {
+    width: 12px;
+    transition-duration: 0.3s;
+  }
+  
+  .svgIcon path {
+    fill: white;
+  }
+  
+  .button:hover {
+    transition-duration: 0.3s;
+    background-color: rgb(255, 69, 69);
+    align-items: center;
+    gap: 0;
+  }
+  
+  .bin-top {
+    transform-origin: bottom right;
+  }
+  .button:hover .bin-top {
+    transition-duration: 0.5s;
+    transform: rotate(160deg);
+  }
+  

@@ -1,0 +1,32 @@
+app/  
+│── services/  
+│   │── movie.service.ts  
+│   │── trending.service.ts  
+│   │── discover.service.ts  
+│   │── search.service.ts  
+│   │── genre.service.ts  
+│   │── cast.service.ts  
+│   │── watchlist.service.ts  
+│   │── auth.service.ts (if using authentication)  
+│   │── recommendation.service.ts (optional)  
+│  
+│── components/  
+│   │── movie-list/  
+│   │── movie-detail/  
+│   │── search-bar/  
+│   │── watchlist/  
+│  
+│── pages/  
+│   │── home/  
+│   │── movie-detail/  
+│   │── search-results/  
+│   │── watchlist/  
+│  
+│── models/ (Optional but recommended)  
+│   │── movie.model.ts  
+│   │── genre.model.ts  
+│   │── cast.model.ts  
+│  
+│── app.module.ts  
+│── app.component.ts  
+│── app-routing.module.ts  

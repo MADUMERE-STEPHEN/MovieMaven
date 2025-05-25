@@ -1,0 +1,102 @@
+<!-- actor-details.component.html -->
+<div class="modern-actor-page">
+    <!-- Loading State -->
+    <div *ngIf="loading" class="loading-overlay">
+      <div class="loading-spinner"></div>
+      <span>Loading...</span>
+    </div>
+  
+    <!-- Error State -->
+    <div *ngIf="error" class="error-message">{{ error }}</div>
+  
+    <!-- Actor Profile -->
+    <div *ngIf="!loading && actor" class="actor-profile">
+      <!-- Hero Section -->
+      <div class="hero-section">
+        <button class="back-btn" (click)="goBack()" title="Back to previous page">
+          <svg class="back-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path fill="currentColor" d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+          </svg>
+        </button>
+        <div class="actor-image" [ngClass]="{'no-image': !actor.profile_path}">
+          <img 
+            [src]="'https://image.tmdb.org/t/p/w500' + actor.profile_path" 
+            [alt]="actor.name" 
+            *ngIf="actor.profile_path; else noImage"
+          />
+          <ng-template #noImage>
+            <div class="image-placeholder">No Image</div>
+          </ng-template>
+        </div>
+        <h1 class="actor-name">{{ actor.name }}</h1>
+        <p class="actor-dept">{{ actor.known_for_department }}</p>
+        <div class="actor-meta">
+          <span class="meta-item">Popularity: {{ actor.popularity?.toFixed(1) }}</span>
+          <span class="meta-item">{{ actor.gender === 2 ? 'Male' : actor.gender === 1 ? 'Female' : 'Other' }}</span>
+        </div>
+      </div>
+  
+      <!-- Details Section -->
+      <div class="actor-details">
+        <!-- Biography -->
+        <section class="bio-section">
+          <h2 class="section-title">About</h2>
+          <p class="bio-text">{{ actor.biography || 'No biography available.' }}</p>
+        </section>
+  
+        <!-- Personal Info -->
+        <section class="info-section">
+          <h2 class="section-title">Details</h2>
+          <div class="info-grid">
+            <div class="info-item">
+              <span class="info-label">Born</span>
+              <span class="info-value">{{ actor.birthday || 'N/A' }}</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Birthplace</span>
+              <span class="info-value">{{ actor.place_of_birth || 'N/A' }}</span>
+            </div>
+            
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <div class="trending-section">
+
+    <h4 class="trending-title animate__animated animate__fadeInDown">Also Acted in</h4>
+    <div class="trending-row">
+        <div class="movie-tile" 
+             *ngFor="let movie of actorCredits">
+            <!-- Tile Layout -->
+            <div class="tile-wrapper">
+                <img src="https://image.tmdb.org/t/p/w500/{{movie.poster_path}}" 
+                     alt="{{movie.title}}" 
+                     class="tile-image">
+                <div class="tile-overlay"></div>
+                <div class="tile-content">
+                    <div class="tile-header">
+                        <h3 class="tile-title">{{movie.title}}</h3>
+                        <div class="tile-rating">
+                            <svg class="star-icon" viewBox="0 0 24 24">
+                                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                            </svg>
+                            <span>{{movie.vote_average.toFixed(1)}}/10</span>
+                        </div>
+                    </div>
+                    <div class="tile-actions">
+
+                        <button class="btn-details" [routerLink] = "['/movie', movie.id]">
+                            <svg class="info-icon" viewBox="0 0 24 24">
+                                <path d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 18a8 8 0 110-16 8 8 0 010 16zm-1-5h2v2h-2v-2zm0-8h2v6h-2V7z"/>
+                            </svg>
+                            Details
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

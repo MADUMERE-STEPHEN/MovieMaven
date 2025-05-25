@@ -1,1 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
+body{
+    background: url("https://img.freepik.com/free-vector/zigzag-lines-pattern-black-background_1017-37483.jpg?ga=GA1.1.1747427212.1733684529&semt=ais_hybrid")center/cover no-repeat;
+    height: 100;
+    position: relative;
+    font-family: Roboto;
+}
